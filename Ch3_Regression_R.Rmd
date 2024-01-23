@@ -291,7 +291,8 @@ Here are few rules:
 - You need to explain why you added each variable.
 
 ```{r,eval=FALSE,echo=show_code}
-lmfit_2008<- # ["your model here"] # use ames_raw_2008
+# ["your model here"] # use ames_raw_2008
+lmfit_2008<- lm(log(SalePrice) ~ log(`Lot Area`) + `Lot Config` + `Bldg Type` + , data = ames_raw_2008)
 ```
 
 When you decide on your model use the following to come up with your test loss.

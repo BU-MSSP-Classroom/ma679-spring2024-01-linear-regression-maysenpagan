@@ -291,7 +291,10 @@ Here are few rules:
 - You need to explain why you added each variable.
 
 ```{r,eval=FALSE,echo=show_code}
-lmfit_2008<- # ["your model here"] # use ames_raw_2008
+
+lmfit_2008<- lm(log(SalePrice) ~ log(`Lot Area`) + `Lot Config` + `Bldg Type` + `Overall Qual` + `TotRms AbvGrd` + `Garage Cars` + (`TotRms AbvGrd`*log(`Lot Area`)) + (`Garage Cars`*log(`Lot Area`)), data = ames_raw_2008)
+
+summary(lmfit_2008)
 ```
 
 When you decide on your model use the following to come up with your test loss.
@@ -410,14 +413,16 @@ Please write your answer in full sentences.
 
 Your code:
 ```{r,echo=TRUE}
-#
-#
+library(ISLR2)
+fit <- lm(mpg ~ horsepower, data = Auto)
+summary(fit)
+confint(fit)
 ```
 
 Your answer:
 
 ~~~
-Please write your answer in full sentences.
+There does appear to be a relationship between the predictor and the response. The p-value of the coefficient for mpg is very small suggesting that there is a significant association between mpg and horsepower. The negative sign of the coefficient means that the relationship is negative. As the horsepower increases, the mpg tends to decrease. The predicted mpg associated with a horsepower of 98 is about 24.47.
 
 
 ~~~

@@ -292,7 +292,7 @@ Here are few rules:
 
 ```{r,eval=FALSE,echo=show_code}
 
-lmfit_2008<- lm(log(SalePrice) ~ log(`Lot Area`) + `Lot Config` + `Bldg Type` + `Overall Qual` + `TotRms AbvGrd` + `Garage Cars` + (`TotRms AbvGrd`*log(`Lot Area`)) + (`Garage Cars`*log(`Lot Area`)), data = ames_raw_2008)
+lmfit_2008<- lm(log(SalePrice) ~ `Overall Qual` + Foundation + `Year Remod/Add` + (`TotRms AbvGrd`*log(`Lot Area`)) + (`Garage Cars`*log(`Lot Area`)), data = ames_raw_2008)
 
 summary(lmfit_2008)
 ```
@@ -334,7 +334,7 @@ Your code:
 Your answer:
 
 ~~~
-Please write your answer in full sentences.
+We should not include all 83 predictors of the data set. Including so many predictors would lead to the model capturing all of the noise and hence overfit the data. The model would then not be generalizable to new data. 
 
 
 ~~~
@@ -344,15 +344,13 @@ Please write your answer in full sentences.
 
 Your code:
 ```{r,echo=TRUE}
-#
-#
+
 ```
 
 Your answer:
 
 ~~~
-Please write your answer in full sentences.
-
+Interactions involving the lot area of properties and other predictors make sense to include in the model. The relationship between the size of the house and sale price may depend on other features like the total rooms above grade or the size of the garage in terms of how many cars it can hold.
 
 ~~~
 

@@ -1,7 +1,7 @@
 ---
 title: "Regression"
-author: "Your Name"
-date: "2022-12-21"
+author: "Maysen Pagan"
+date: "2024-01-25"
 output: html_document
 ---
 
@@ -290,7 +290,7 @@ Here are few rules:
 - You cannot use automatic variable selection.
 - You need to explain why you added each variable.
 
-```{r,eval=FALSE,echo=show_code}
+```{r,echo=show_code}
 
 lmfit_2008<- lm(log(SalePrice) ~ `Overall Qual` + Foundation + `Year Remod/Add` + (`TotRms AbvGrd`*log(`Lot Area`)) + (`Garage Cars`*log(`Lot Area`)), data = ames_raw_2008)
 
@@ -298,7 +298,7 @@ summary(lmfit_2008)
 ```
 
 When you decide on your model use the following to come up with your test loss.
-```{r,eval=FALSE,echo=show_code}
+```{r,echo=show_code}
 pred_2009<-exp(predict(lmfit_2008,newdata=ames_raw_2009))
 calc_loss(pred_2009,ames_raw_2009$SalePrice)
 ```
@@ -414,13 +414,14 @@ Your code:
 library(ISLR2)
 fit <- lm(mpg ~ horsepower, data = Auto)
 summary(fit)
-confint(fit)
+predict(fit, newdata = data.frame(horsepower = 98), interval = "confidence")
+predict(fit, newdata = data.frame(horsepower = 98), interval = "prediction")
 ```
 
 Your answer:
 
 ~~~
-There does appear to be a relationship between the predictor and the response. The p-value of the coefficient for mpg is very small suggesting that there is a significant association between mpg and horsepower. The negative sign of the coefficient means that the relationship is negative. As the horsepower increases, the mpg tends to decrease. The predicted mpg associated with a horsepower of 98 is about 24.47.
+There does appear to be a relationship between the predictor and the response. The p-value of the coefficient for mpg is very small suggesting that there is a significant association between mpg and horsepower. The negative sign of the coefficient means that the relationship is negative. As the horsepower increases, the mpg tends to decrease. The predicted mpg associated with a horsepower of 98 is about 24.47. The 95% confidence interval of this prediction is (23.97, 24.96) and the 95% prediction interval is (14.81, 34.12)
 
 
 ~~~
@@ -440,9 +441,12 @@ iv. What is the predicted mpg associated with a horsepower of 98? What are the a
 
 
 Your code:
-```{r,echo=TRUE}
-#
-#
+```{r,echo=TRUE, fig.width=7,fig.height=4.5}
+Auto %>% ggplot(aes(horsepower, mpg)) + 
+  geom_point(alpha = 0.5) + 
+  geom_abline(slope = fit$coefficients[2], 
+              intercept = fit$coefficients[1],
+              col = "red")
 ```
 
 Your answer:
@@ -457,16 +461,15 @@ Please write your answer in full sentences.
 (c) Use the `plot()` function to produce diagnostic plots of the least squares regression fit. Comment on any problems you see with the fit.
 
 Your code:
-```{r,echo=TRUE}
-#
-#
+```{r,echo=TRUE, ,fig.width=7,fig.height=4.5}
+par(mfrow = c(2,2))
+plot(fit)
 ```
 
 Your answer:
 
 ~~~
-Please write your answer in full sentences.
-
+In the residuals vs fitted plot, there does not appear to be a random, scattered pattern but a curved, fanning pattern. The curved pattern suggests that the lienarity assumption is violated and a linear model may not be the best fit. The fanning pattern shows that for larger values of horsepower, the residuals are more spread out suggesting that the homoscedasticity assumption is violated. 
 
 ~~~
 
@@ -476,9 +479,8 @@ Please write your answer in full sentences.
 (a) Produce a scatterplot matrix which includes all of the variables in the data set.
 
 Your code:
-```{r,echo=TRUE}
-#
-#
+```{r,echo=TRUE,fig.width=7,fig.height=7}
+pairs(Auto, pch = 19, cex = 0.5)
 ```
 
 Your answer:
@@ -496,8 +498,7 @@ cor() which is qualitative.
 
 Your code:
 ```{r,echo=TRUE}
-#
-#
+cor(Auto[,1:8])
 ```
 
 Your answer:
@@ -515,8 +516,8 @@ the predictors. Use the summary() function to print the results.
 
 Your code:
 ```{r,echo=TRUE}
-#
-#
+mod <- lm(mpg~.-name, data = Auto)
+summary(mod)
 ```
 
 Your answer:

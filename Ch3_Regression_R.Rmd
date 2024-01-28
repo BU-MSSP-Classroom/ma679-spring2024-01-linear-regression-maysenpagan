@@ -523,8 +523,7 @@ summary(mod)
 Your answer:
 
 ~~~
-Please write your answer in full sentences.
-
+Based on the p-values, the variables displacement, weight, year, and origin all have a statistically significant relationship with the response variable mpg because the p-values of their coefficients are very low. The coefficient for year variable suggests that every one year increase in the model year of the car is associated with a positive difference of 0.75 in the mpg. Similarly, every ten year increase in the model year of the car is associated with a positive difference of 7.5 in the mpg.
 
 ~~~
 
@@ -538,25 +537,24 @@ iii. What does the coefficient for the year variable suggest?
 (d) Use the plot() function to produce diagnostic plots of the linear regression fit. Comment on any problems you see with the fit. Do the residual plots suggest any unusually large outliers? Does the leverage plot identify any observations with unusually high leverage?
 
 Your code:
-```{r,echo=TRUE}
-#
-#
+```{r,echo=TRUE,fig.width=7,fig.height=7}
+par(mfrow = c(2,2))
+plot(mod)
 ```
 
 Your answer:
 
 ~~~
-Please write your answer in full sentences.
-
+This residual plot also shows a curved and fanning pattern suggesting that the linearity and homoscedasticity assumptions are violated. The residual plots do not show any obvious outliers, but observation 323 could possibly be an outlier. No points are past Cook's distance in the leverage plot suggesting that there are no observations with unusually high leverage.
 
 ~~~
 
-(e) Use the * and : symbols to fit linear regression models with interaction effects. Why did you add the interaction?  Explain using the context of the problem.  Do any interactions appear to be statistically significant?  
+(e) Use the * and : symbols to fit linear regression models with interaction effects. Why did you add the interaction?  Explain using the context of the problem. Do any interactions appear to be statistically significant?  
 
 Your code:
 ```{r,echo=TRUE}
-#
-#
+mod2 <- lm(mpg~.-name + year*horsepower + cylinders*horsepower, data = Auto)
+summary(mod2)
 ```
 
 Your answer:
